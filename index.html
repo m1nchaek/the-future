@@ -32,6 +32,22 @@
       border-bottom: 2px solid #ff00aa;
     }
 
+#vibeToggle {
+   position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 200;
+  width : 100px; 
+  height: 50px; 
+  background: #ff00aa;
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
     h1 {
       font-size: 1.5rem;
       text-shadow: 0 0 10px #0ff;
@@ -360,10 +376,11 @@
   </style>
 </head>
 <body>
+     <button id="vibeToggle">Switch Vibe</button>
   <aside class="sidebar">
     <header>
       <h1>NeoGram</h1>
-      <button id="vibeToggle">Switch Vibe</button>
+     
     </header>
     <button class="dm-btn">✉ DM</button>
     <div class="dm-popup" id="dmPopup">
@@ -442,30 +459,51 @@
   </div>
 
   <script>
-    let currentStoryIndex = 0;
-    const stories = document.querySelectorAll('.story');
+  let currentStoryIndex = 0;
+  const stories = document.querySelectorAll('.story');
 
-    function scrollStoriesLeft() {
-      currentStoryIndex = Math.max(0, currentStoryIndex - 5);
-      updateStories();
-    }
+  function scrollStoriesLeft() {
+    currentStoryIndex = Math.max(0, currentStoryIndex - 5);
+    updateStories();
+  }
 
-    function scrollStoriesRight() {
-      currentStoryIndex = Math.min(stories.length - 5, currentStoryIndex + 5);
-      updateStories();
-    }
+  function scrollStoriesRight() {
+    currentStoryIndex = Math.min(stories.length - 5, currentStoryIndex + 5);
+    updateStories();
+  }
 
-    function updateStories() {
-      stories.forEach((story, index) => {
-        if (index >= currentStoryIndex && index < currentStoryIndex + 5) {
-          story.style.display = 'block';
-        } else {
-          story.style.display = 'none';
-        }
-      });
-    }
+  function updateStories() {
+    stories.forEach((story, index) => {
+      if (index >= currentStoryIndex && index < currentStoryIndex + 5) {
+        story.style.display = 'block';
+      } else {
+        story.style.display = 'none';
+      }
+    });
+  }
 
-    updateStories(); // Initial update
+  updateStories(); // Initial update
+
+
+  // ===== DM Button Logic =====
+  const dmBtn = document.querySelector('.dm-btn');
+  const dmPopup = document.getElementById('dmPopup');
+  const closeDM = document.getElementById('closeDM');
+
+  dmBtn.addEventListener('click', () => {
+    dmPopup.classList.add('active');
+  });
+
+  closeDM.addEventListener('click', () => {
+    dmPopup.classList.remove('active');
+  });
+
+
+  // ===== Vibe Switcher Logic =====
+  const vibeToggle = document.getElementById('vibeToggle');
+  vibeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('hectic');
+  });
   </script>
 </body>
 </html>
