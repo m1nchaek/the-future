@@ -175,8 +175,6 @@
       padding-top: 150px; /* Pushing content down slightly */
     }
 
-
-
     .story-bar {
       display: flex;
       gap: 1rem;
@@ -396,6 +394,10 @@
         <div class="story"><img src="https://placekitten.com/72/72" alt="Story 3" /></div>
         <div class="story"><img src="https://placekitten.com/73/73" alt="Story 4" /></div>
         <div class="story"><img src="https://placekitten.com/74/74" alt="Story 5" /></div>
+        <div class="story"><img src="https://placekitten.com/75/75" alt="Story 6" /></div>
+        <div class="story"><img src="https://placekitten.com/76/76" alt="Story 7" /></div>
+        <div class="story"><img src="https://placekitten.com/77/77" alt="Story 8" /></div>
+        <div class="story"><img src="https://placekitten.com/78/78" alt="Story 9" /></div>
       </div>
       <button class="right-arrow" onclick="scrollStoriesRight()">→</button>
     </div>
@@ -440,39 +442,30 @@
   </div>
 
   <script>
+    let currentStoryIndex = 0;
+    const stories = document.querySelectorAll('.story');
+
     function scrollStoriesLeft() {
-      const storyBar = document.getElementById('storyBar');
-      
-      storyBar.scrollBy({
-        left: -150, 
-        behavior: 'smooth'
-      });
+      currentStoryIndex = Math.max(0, currentStoryIndex - 5);
+      updateStories();
     }
 
     function scrollStoriesRight() {
-      const storyBar = document.getElementById('storyBar');
-      storyBar.scrollBy({
-        left: 150,
-        behavior: 'smooth'
+      currentStoryIndex = Math.min(stories.length - 5, currentStoryIndex + 5);
+      updateStories();
+    }
+
+    function updateStories() {
+      stories.forEach((story, index) => {
+        if (index >= currentStoryIndex && index < currentStoryIndex + 5) {
+          story.style.display = 'block';
+        } else {
+          story.style.display = 'none';
+        }
       });
     }
 
-    const vibeToggle = document.getElementById("vibeToggle");
-    const dmBtn = document.querySelector(".dm-btn");
-    const dmPopup = document.getElementById("dmPopup");
-    const closeDM = document.getElementById("closeDM");
-
-    vibeToggle.addEventListener("click", () => {
-      document.body.classList.toggle("hectic");
-    });
-
-    dmBtn.addEventListener("click", () => {
-      dmPopup.classList.add("active");
-    });
-
-    closeDM.addEventListener("click", () => {
-      dmPopup.classList.remove("active");
-    });
+    updateStories(); // Initial update
   </script>
 </body>
 </html>
