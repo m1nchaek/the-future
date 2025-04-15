@@ -1,11 +1,335 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Future</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Futuristic Insta</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      display: flex;
+      min-height: 100vh;
+    }
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .sidebar h1 {
+      font-size: 1.5rem;
+      text-shadow: 0 0 8px #0ff;
+    }
+    .sidebar nav a {
+      color: #ccc;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 1rem;
+      transition: color 0.3s ease;
+    }
+    .sidebar nav a:hover {
+      color: #0ff;
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Stories Container */
+    .story-bar-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden; /* Remove hints of circles outside */
+    }
+
+    .story-bar {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      padding: 0.5rem 0;
+      flex: 1;
+      justify-content: center;
+      scroll-behavior: smooth;
+      align-items: center;
+    }
+
+    .story-bar::-webkit-scrollbar {
+      display: none; /* Hide the scrollbar for a cleaner look */
+    }
+
+    .story {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #0ff;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .story img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .story:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+    }
+
+    /* Arrow Buttons */
+    .left-arrow, .right-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 255, 255, 0.2);
+      border: 1px solid #0ff;
+      color: #0ff;
+      font-size: 2rem;
+      padding: 0.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+      z-index: 10;
+      display: block;
+    }
+
+    .left-arrow:hover, .right-arrow:hover {
+      background: rgba(0, 255, 255, 0.5);
+      transform: scale(1.1);
+    }
+
+    /* Position the arrows */
+    .left-arrow {
+      left: 10px; /* Slightly inset from the left edge */
+    }
+
+    .right-arrow {
+      right: 10px; /* Slightly inset from the right edge */
+    }
+
+      .post-container {
+      width: 500px;
+      height: 800px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+    }
+
+    /* Preview Section (Top part) */
+    .preview {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      height: 10%;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .preview img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .username {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    /* Full Image Section */
+    .full-image {
+      flex: 1; /* This will take up 60% of the container */
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .full-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-bottom: 5px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Comments Section (Bottom part) */
+    .comments-section {
+      height: 30%;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-top: 5px solid rgba(255, 255, 255, 0.1);
+      overflow-y: auto;
+    }
+
+    .comment {
+      display: flex;
+      margin-bottom: 1rem;
+      align-items: center;
+    }
+
+    .comment img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .comment-text {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    .comment-username {
+      font-weight: bold;
+      color: #0ff;
+    }
+
+    .comment-time {
+      font-size: 0.8rem;
+      color: #888;
+    }
+
+    /* Add a scroll bar for the comments section */
+    .comments-section::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .comments-section::-webkit-scrollbar-thumb {
+      background-color: #0ff;
+      border-radius: 3px; }
+  </style>
 </head>
 <body>
-    
+  <aside class="sidebar">
+    <h1>InstaFuture</h1>
+    <nav>
+      <a href="#">🏠 Home</a>
+      <a href="#">🔍 Explore</a>
+      <a href="#">❤️ Notifications</a>
+      <a href="#">✉️ Messages</a>
+      <a href="#">👤 Profile</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="story-bar-container">
+      <!-- Left Arrow -->
+      <button class="left-arrow" onclick="scrollStoriesLeft()">←</button>
+      
+      <!-- Story Bar -->
+      <div class="story-bar" id="storyBar">
+        <div class="story"><img src="https://placekitten.com/70/70" alt="Story 1" /></div>
+        <div class="story"><img src="https://placekitten.com/71/71" alt="Story 2" /></div>
+        <div class="story"><img src="https://placekitten.com/72/72" alt="Story 3" /></div>
+        <div class="story"><img src="https://placekitten.com/73/73" alt="Story 4" /></div>
+        <div class="story"><img src="https://placekitten.com/74/74" alt="Story 5" /></div>
+        <div class="story"><img src="https://placekitten.com/75/75" alt="Story 6" /></div>
+        <div class="story"><img src="https://placekitten.com/76/76" alt="Story 7" /></div>
+        <div class="story"><img src="https://placekitten.com/77/77" alt="Story 8" /></div>
+      </div>
+
+      <!-- Right Arrow -->
+      <button class="right-arrow" onclick="scrollStoriesRight()">→</button>
+    </div>
+
+    <div class="feed">
+      <!-- Your feed content here -->
+    </div>
+  </main>
+
+   <div class="post-container">
+    <!-- Preview Section -->
+    <div class="preview">
+      <img src="https://placekitten.com/50/50" alt="User" />
+      <div class="username">username123</div>
+    </div>
+
+    <!-- Full Image Section -->
+    <div class="full-image">
+      <img src="https://placekitten.com/500/500" alt="Post Image" />
+    </div>
+
+    <!-- Comments Section -->
+    <div class="comments-section">
+      <!-- Example Comment 1 -->
+      <div class="comment">
+        <img src="https://placekitten.com/40/40" alt="Commenter" />
+        <div>
+          <div class="comment-text">
+            <span class="comment-username">user1</span> Great post! Love this pic. <span class="comment-time">2 hours ago</span>
+          </div>
+        </div>
+      </div>
+      <!-- Example Comment 2 -->
+      <div class="comment">
+        <img src="https://placekitten.com/41/41" alt="Commenter" />
+        <div>
+          <div class="comment-text">
+            <span class="comment-username">user2</span> This is amazing! Keep it up. <span class="comment-time">3 hours ago</span>
+          </div>
+        </div>
+      </div>
+      <!-- Example Comment 3 -->
+      <div class="comment">
+        <img src="https://placekitten.com/42/42" alt="Commenter" />
+        <div>
+          <div class="comment-text">
+            <span class="comment-username">user3</span> Wow, love this view! <span class="comment-time">5 hours ago</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Function to scroll left
+    function scrollStoriesLeft() {
+      const storyBar = document.getElementById('storyBar');
+      storyBar.scrollBy({
+        left: -150, // Scroll left by 150px
+        behavior: 'smooth'
+      });
+    }
+
+    // Function to scroll right
+    function scrollStoriesRight() {
+      const storyBar = document.getElementById('storyBar');
+      storyBar.scrollBy({
+        left: 150, // Scroll right by 150px
+        behavior: 'smooth'
+      });
+    }
+  </script>
 </body>
 </html>
