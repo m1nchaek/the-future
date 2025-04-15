@@ -433,21 +433,8 @@
 
   <script>
     function scrollStoriesLeft() {
-      const storyBar = document.getElementById('storyBar');.post-container {
-  width: 500px;
-  height: 800px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-radius: 15px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-  position: absolute;
-  top: 140px; /* Added 20px gap from story bar */
-  left: 50%;
-  transform: translateX(-50%); /* Center horizontally */
-}
+      const storyBar = document.getElementById('storyBar');
+      
       storyBar.scrollBy({
         left: -150, 
         behavior: 'smooth'
