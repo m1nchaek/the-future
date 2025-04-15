@@ -175,20 +175,7 @@
       padding-top: 150px; /* Pushing content down slightly */
     }
 
-    /* === Story Bar === */
-    .story-bar-container {
-      position: fixed; /* Fixed at the top */
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(10px);
-      z-index: 10;
-      padding: 1rem 2rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      justify-content: center;
-    }
+
 
     .story-bar {
       display: flex;
@@ -259,7 +246,23 @@
     }
 
     /* === Post Container === */
-  .post-container {
+.story-bar-container {
+  position: absolute;
+  top: 0; /* Move it to the top */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+/* === Post Container === */
+.post-container {
   width: 500px;
   height: 800px;
   background: rgba(255, 255, 255, 0.05);
